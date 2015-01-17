@@ -20,6 +20,8 @@ nnoremap ,S :se enc=Shift-JIS<CR>
 nnoremap > :call Indent()<CR>
 nnoremap < :call Unindent()<CR>
 
+command! -complete=file -nargs=+ Grep call DoGrep(<f-args>)
+
 if !has('gui_running')
   set t_Co=256
 endif
@@ -71,27 +73,29 @@ function! DeleteBlankLineIndentSub()
 endfunction
 
 function! Indent()
-  let indent = ""
+  let l:indent = ""
   for i in range(1, g:indent)
-    let indent = indent . " "
+    let l:indent = indent . " "
   endfor
-  call setline(line("."), indent . getline(line(".")))
+  call setline(line("."), l:indent . getline(line(".")))
 endfunction
 
 function! Unindent()
-  call setline(line("."), getline(line("."))[g:indent :])
-endfunction
-
-function! ListBuffer()
-  let l:line = 1
-  for x in range(1,10)
-    if buffer_exists(x)
-      let name=split(buffer_name(x), "\\")
-      if len(name) != 0
-        call setline(line, name[len(name)-1])
-        let l:line += 1
-      endif
+  let l:s = getline(line("."))
+  for i in range(1, g:indent)
+    if l:s[0] =~ "\\s"
+      let l:s = l:s[1:]
+    else
+      break
     endif
   endfor
+  call setline(line("."), l:s)
 endfunction
 
+function! DoGrep(...)
+  if len(a:000) == 1
+    vimgrep a:1 % | cw
+  elseif len(a:000) == 2
+    vimgrep a:1 a:2 | cw
+  endif
+endfunction
