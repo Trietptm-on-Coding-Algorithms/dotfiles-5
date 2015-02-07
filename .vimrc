@@ -2,37 +2,104 @@ syntax on
 set number
 
 set nocompatible
-set nohlsearch
 set expandtab
 set tabstop=2
+set shiftwidth=2
 set autoindent
 set laststatus=2
 set incsearch
 set ignorecase
 set backspace=indent,start,eol
-set guifont=Migu_1M:h12
+set guifont="Migu 1M 12"
+set list
+set wrap
+set textwidth=0
+set colorcolumn=80
+set listchars="  ":\¦\
+set nohlsearch
+if !has('gui_running')
+  set visualbell
+  set t_vb=
+  set t_Co=256
+endif
+
+
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+
+colorscheme hybrid
 
 let g:indent = 2
+
+"---------------------------
+"" Start Neobundle Settings.
+"---------------------------
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'majutsushi/tagbar'
+"NeoBundle 'Rip-Rip/clang_complete'
+
+
+call neobundle#end()
+filetype plugin indent on
+
+NeoBundleCheck
+
+"-------------------------
+" End Neobundle Settings.
+"-------------------------
+
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_command = "<C-n>"
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:indentLine_char='|'
+
+let g:syntastic_mode_map = { 'mode': 'passive' }
 
 nnoremap /  /\v
 nnoremap ,U :se enc=utf-8<CR>
 nnoremap ,S :se enc=Shift-JIS<CR>
+nnoremap .U :e ++enc=utf-8<CR>
+nnoremap .S :e ++enc=Shift-JIS<CR>
 nnoremap > :call Indent()<CR>
 nnoremap < :call Unindent()<CR>
+inoremap <C-v> <ESC>"+gPi<right>
+nnoremap <C-v> "+gP<right>
+nmap <F8> :TagbarToggle<CR>
 
-command! -complete=file -nargs=+ Grep call DoGrep(<f-args>)
+"let g:clang_periodic_quickfix = 1
+"let g:clang_complete_copen = 1
 
-if !has('gui_running')
-  set t_Co=256
-endif
+"let g:clang_periodic_quickfix = 1
+"let g:clang_complete_copen = 1
+"let g:clang_use_library = 1
+
+"let g:clang_library_path = '/usr/lib/llvm/'
 
 let g:lightline = { 
       \ 'colorscheme': 'landscape',
       \ 'active': {
-      \   'right': [ ['lineinfo'],
+      \   'right': [ ['syntastic', 'lineinfo'],
       \              ['parcent', "%"],
       \              ['fileformat'],
       \              ['fileencoding', 'filetype']]
+      \ },
+      \ 'component_expand': {
+      \  'syntastic': 'SyntasticStatuslineFlag', 
+      \ },
+      \ 'component_type': {
+      \   'syntastic': 'error',
       \ },
       \ 'subseparator': { 'left': '|', 'right': '|' },
       \ }
@@ -50,13 +117,25 @@ let g:markdown_fenced_languages = [
       \ 'css', 
       \ ]
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 Autocmd                                     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup mysetting
   autocmd!
   autocmd BufNewFile,BufRead *.inc set filetype=php
   autocmd BufNewFile,BufRead *.jst set filetype=javascript
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   autocmd BufWrite * call DeleteBlankLineIndent()
+  autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
+  autocmd FileType python setlocal completeopt-=preview
+  autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Functions                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! DeleteBlankLineIndent()
   let line = line(".")
@@ -92,10 +171,14 @@ function! Unindent()
   call setline(line("."), l:s)
 endfunction
 
-function! DoGrep(...)
-  if len(a:000) == 1
-    vimgrep a:1 % | cw
-  elseif len(a:000) == 2
-    vimgrep a:1 a:2 | cw
-  endif
+function! s:syntastic()
+  SyntasticCheck
+  call lightline#update()
+endfunction
+
+function! s:vimrc_local(loc)
+  let files = findfile('.vimrc.local', escape(a:loc, ' ') . ';', -1)
+  for i in reverse(filter(files, 'filereadable(v:val)'))
+    source `=i`
+  endfor
 endfunction

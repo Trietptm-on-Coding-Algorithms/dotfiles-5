@@ -113,4 +113,12 @@ export MECAB_PATH=/usr/lib/libmecab.so.2
 export PYTHONSTARTUP="/home/pi/.pyrc"
 
 export TERM=xterm-256color
-export PATH=$PATH:~/scripts:
+export PATH=$PATH:~/scripts:~/prog/bin/:
+
+PATH=$PATH:/home/eshiho/010editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 F41D93F8-3862-B511-D9C2-871D88ACBE45
+# Load pyenv automatically by adding
+# the following to ~/.bash_profile:
+
+export PYENV_ROOT="$HOME/prog/pyenv/"
+eval "$(pyenv init -)"
+

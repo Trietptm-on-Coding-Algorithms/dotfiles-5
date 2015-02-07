@@ -1,0 +1,5 @@
+indentLine
+jedi-vim
+neobundle.vim
+syntastic
+tagbar
