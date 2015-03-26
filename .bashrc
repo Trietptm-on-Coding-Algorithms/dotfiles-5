@@ -91,6 +91,7 @@ alias -- +=pushd
 alias -- -=popd
 alias ":q"="echo \"ここはVimじゃねーよクソ\""
 alias ":wq"="echo \"ここはVimじゃねーよクソ\""
+alias -- ".."="cd .."
 
 shopt -s histverify
 

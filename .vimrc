@@ -6,30 +6,31 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set autoindent
+set smartindent
 set laststatus=2
 set incsearch
 set ignorecase
 set backspace=indent,start,eol
 set guifont="Migu 1M 12"
-set list
+if $LC_ALL != "C"
+  set list
+  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+endif
 set wrap
 set textwidth=0
 set colorcolumn=80
 set listchars="  ":\¦\
 set nohlsearch
+
 if !has('gui_running')
   set visualbell
   set t_vb=
   set t_Co=256
 endif
 
-
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-
 colorscheme hybrid
 
 let g:indent = 2
-
 "---------------------------
 "" Start Neobundle Settings.
 "---------------------------
@@ -40,11 +41,10 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'majutsushi/tagbar'
+NeoBundleLazy 'davidhalter/jedi-vim'
 "NeoBundle 'Rip-Rip/clang_complete'
-
 
 call neobundle#end()
 filetype plugin indent on
@@ -63,6 +63,12 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:clang_use_library = 1
+
+let g:clang_library_path = '/usr/share/clang/'
+let g:clang_debug = 1
+let g:clang_user_options = '-std=c++11 -stdlib=libc++'
+
 let g:indentLine_char='|'
 
 let g:syntastic_mode_map = { 'mode': 'passive' }
@@ -72,26 +78,17 @@ nnoremap ,U :se enc=utf-8<CR>
 nnoremap ,S :se enc=Shift-JIS<CR>
 nnoremap .U :e ++enc=utf-8<CR>
 nnoremap .S :e ++enc=Shift-JIS<CR>
-nnoremap > :call Indent()<CR>
-nnoremap < :call Unindent()<CR>
+nnoremap <silent> > :call Indent()<CR>
+nnoremap <silent> < :call Unindent()<CR>
 inoremap <C-v> <ESC>"+gPi<right>
 nnoremap <C-v> "+gP<right>
 nmap <F8> :TagbarToggle<CR>
-
-"let g:clang_periodic_quickfix = 1
-"let g:clang_complete_copen = 1
-
-"let g:clang_periodic_quickfix = 1
-"let g:clang_complete_copen = 1
-"let g:clang_use_library = 1
-
-"let g:clang_library_path = '/usr/lib/llvm/'
 
 let g:lightline = { 
       \ 'colorscheme': 'landscape',
       \ 'active': {
       \   'right': [ ['syntastic', 'lineinfo'],
-      \              ['parcent', "%"],
+      \              ['percent'],
       \              ['fileformat'],
       \              ['fileencoding', 'filetype']]
       \ },
@@ -128,6 +125,7 @@ augroup mysetting
   autocmd BufWrite * call DeleteBlankLineIndent()
   autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
   autocmd FileType python setlocal completeopt-=preview
+  autocmd FileType c,cpp set foldmethod=marker foldexpr=
   autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
