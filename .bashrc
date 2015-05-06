@@ -93,6 +93,7 @@ alias ":q"="echo \"ここはVimじゃねーよクソ\""
 alias ":wq"="echo \"ここはVimじゃねーよクソ\""
 alias -- ".."="cd .."
 alias -- "gvim"="gvim 2>/dev/null"
+alias -- "strings"="strings -tx"
 
 shopt -s histverify
 
