@@ -43,7 +43,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'majutsushi/tagbar'
-NeoBundleLazy 'davidhalter/jedi-vim'
+NeoBundle 'davidhalter/jedi-vim'
 "NeoBundle 'Rip-Rip/clang_complete'
 
 call neobundle#end()
@@ -121,6 +121,7 @@ augroup mysetting
   autocmd!
   autocmd BufNewFile,BufRead *.inc set filetype=php
   autocmd BufNewFile,BufRead *.jst set filetype=javascript
+  autocmd BufNewFile,BufRead *.sage set filetype=python
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   autocmd BufWrite * call DeleteBlankLineIndent()
   autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()

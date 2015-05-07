@@ -113,7 +113,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 export MECAB_PATH=/usr/lib/libmecab.so.2
-export PYTHONSTARTUP="/home/pi/.pyrc"
+export PYTHONSTARTUP="/home/eshiho/.pyrc"
 
 export TERM=xterm-256color
 export PATH=$PATH:~/scripts:~/prog/bin/:
