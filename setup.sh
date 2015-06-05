@@ -20,6 +20,7 @@ function entry () {
 entry ".pyrc"
 entry ".vimrc"
 entry ".bashrc"
+entry ".gdbinit"
 
 entry ".vim/"
 entry "opt/"
