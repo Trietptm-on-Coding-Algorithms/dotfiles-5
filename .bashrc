@@ -21,6 +21,15 @@ function md_cd() {
   cd $1
 }
 
+function catch_segfault() {
+  export LD_PRELOAD_BAK=$LD_PRELOAD
+  export LD_PRELOAD=/lib/libSegFault.so
+  export SEGFAULT_SIGNALS=all
+}
+
+function uncatch_segfault() {
+  export LD_PRELOAD=$LD_PRELOAD_BAK
+}
 
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)

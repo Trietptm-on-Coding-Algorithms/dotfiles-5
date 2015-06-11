@@ -5,6 +5,8 @@ end
 define printinfo
 bt 
 printf "\n"
+i f 0
+printf "\n"
 esc
 printf "32m"
 x/8i $pc
