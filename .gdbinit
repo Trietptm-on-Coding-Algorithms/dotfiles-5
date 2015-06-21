@@ -32,3 +32,15 @@ stepi
 printinfo
 end
 
+define rn
+reverse-nexti
+printinfo
+end
+
+define rs
+reverse-stepi
+printinfo
+end
+
+set disassembly-flavor intel
+set follow-fork-mode child
