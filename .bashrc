@@ -31,6 +31,21 @@ function uncatch_segfault() {
   export LD_PRELOAD=$LD_PRELOAD_BAK
 }
 
+function pop_or_back() {
+  if [ "$PREV_DIR" != "" ]; then
+    cd $PREV_DIR
+    unset PREV_DIR
+  else
+    popd
+  fi
+}
+
+function logged_cd() {
+  PREV_DIR=`pwd`
+  echo $PREV_DIR
+  \cd "$@"
+}
+
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
@@ -50,9 +65,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w $(psexit)\$\[\033[00m\] '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w $(psexit)\n\$\[\033[00m\] '
 else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -79,13 +94,14 @@ alias l='ls -CF'
 alias tmux='tmux -S $HOME/opt/tmux/socket'
 alias d='dirs'
 alias -- +=pushd
-alias -- -=popd
+alias -- -=pop_or_back
 alias ":q"="echo \"ここはVimじゃねーよクソ\""
 alias ":wq"="echo \"ここはVimじゃねーよクソ\""
 alias -- ".."="cd .."
 alias -- "gvim"="gvim 2>/dev/null"
 alias -- "strings"="strings -tx"
 alias -- "mkdir"="md_cd"
+alias -- "cd"="logged_cd"
 
 shopt -s histverify
 
