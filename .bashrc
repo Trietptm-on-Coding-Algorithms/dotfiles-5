@@ -16,9 +16,7 @@ function psexit() {
 }
 
 function md_cd() {
-  mkdir $1
-  echo $1
-  cd $1
+  mkdir $1 && echo $1 && cd $1
 }
 
 function catch_segfault() {
@@ -31,19 +29,9 @@ function uncatch_segfault() {
   export LD_PRELOAD=$LD_PRELOAD_BAK
 }
 
-function pop_or_back() {
-  if [ "$PREV_DIR" != "" ]; then
-    cd $PREV_DIR
-    unset PREV_DIR
-  else
-    popd
-  fi
-}
-
 function logged_cd() {
-  PREV_DIR=`pwd`
-  echo $PREV_DIR
   \cd "$@"
+  pwd
 }
 
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -94,7 +82,7 @@ alias l='ls -CF'
 alias tmux='tmux -S $HOME/opt/tmux/socket'
 alias d='dirs'
 alias -- +=pushd
-alias -- -=pop_or_back
+alias -- -=popd
 alias ":q"="echo \"ここはVimじゃねーよクソ\""
 alias ":wq"="echo \"ここはVimじゃねーよクソ\""
 alias -- ".."="cd .."
@@ -102,6 +90,7 @@ alias -- "gvim"="gvim 2>/dev/null"
 alias -- "strings"="strings -tx"
 alias -- "mkdir"="md_cd"
 alias -- "cd"="logged_cd"
+alias -- "objdump"="objdump -Mintel"
 
 shopt -s histverify
 

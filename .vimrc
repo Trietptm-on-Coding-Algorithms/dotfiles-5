@@ -12,15 +12,11 @@ set incsearch
 set ignorecase
 set backspace=indent,start,eol
 set guifont="Migu 1M 12"
-if $LC_ALL != "C"
-  set list
-  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-endif
 set wrap
 set textwidth=0
 set colorcolumn=80
-set listchars="  ":\¦\
 set nohlsearch
+set mouse=a
 
 if !has('gui_running')
   set visualbell
@@ -44,6 +40,7 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'lervag/vim-latex'
 "NeoBundle 'Rip-Rip/clang_complete'
 
 call neobundle#end()
@@ -72,16 +69,24 @@ let g:clang_user_options = '-std=c++11 -stdlib=libc++'
 let g:indentLine_char='|'
 
 let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:tex_conceal=''
+let g:latex_latexmk_continuous = 1
 
 nnoremap /  /\v
 nnoremap ,U :se enc=utf-8<CR>
 nnoremap ,S :se enc=Shift-JIS<CR>
 nnoremap .U :e ++enc=utf-8<CR>
 nnoremap .S :e ++enc=Shift-JIS<CR>
+nnoremap zs zA
+nnoremap <C-d> <C-b>
 nnoremap <silent> > :call Indent()<CR>
 nnoremap <silent> < :call Unindent()<CR>
 inoremap <C-v> <ESC>"+gPi<right>
 nnoremap <C-v> "+gP<right>
+nnoremap <silent> <Leader>g :SearchWord expand("<cword>")<CR>
+nnoremap <silent> <Leader>a :SearchWordAll expand("<cword>")<CR>
+command! -nargs=1 SearchWord bufdo vimgrepa <args> % | cw
+command! -nargs=1 SearchWordAll vimgrep <args> * | cw
 nmap <F8> :TagbarToggle<CR>
 
 let g:lightline = { 
@@ -124,9 +129,9 @@ augroup mysetting
   autocmd BufNewFile,BufRead *.sage set filetype=python
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   autocmd BufWrite * call DeleteBlankLineIndent()
-  autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
+  autocmd BufWritePost * call s:syntastic()
   autocmd FileType python setlocal completeopt-=preview
-  autocmd FileType c,cpp set foldmethod=marker foldexpr=
+  autocmd FileType c,cpp setlocal foldmethod=syntax
   autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
