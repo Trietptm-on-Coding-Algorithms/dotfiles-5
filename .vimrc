@@ -135,6 +135,9 @@ augroup mysetting
   autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
+  autocmd BufReadPost * if &binary | call ReadBin() | endif 
+  autocmd BufWritePre * if &binary | call WriteBin() | endif
+  autocmd BufWritePost * if &binary | call ReadBin() | endif
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -185,4 +188,14 @@ function! s:vimrc_local(loc)
   for i in reverse(filter(files, 'filereadable(v:val)'))
     source `=i`
   endfor
+endfunction
+
+function! ReadBin()
+  silent %!xxd -g 1
+  set ft=xxd
+endfunction
+
+function! WriteBin()
+  silent %!xxd -r
+  set nomod
 endfunction

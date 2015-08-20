@@ -91,6 +91,9 @@ alias -- "strings"="strings -tx"
 alias -- "mkdir"="md_cd"
 alias -- "cd"="logged_cd"
 alias -- "objdump"="objdump -Mintel"
+alias -- "rot13"="conv -e rot13"
+alias -- "zlib"="conv -e zlib"
+alias -- "unzlib"="conv -d zlib"
 
 shopt -s histverify
 
