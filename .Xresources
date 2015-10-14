@@ -1,0 +1,17 @@
+!!! .Xresources for Vine Linux
+
+!!! Xaw3d
+*beNiceToColormap:	False
+
+XTerm*utf8 : 1
+XTerm*locale : true
+XTerm*selecToClipboard : true
+XTerm*faceSize : 10
+XTerm*cjkWidth : true
+XTerm*background : black
+XTerm*foreground : green
+Xterm*saveLines : 10000
+
+URxvt*font : -*-m+ 1m medium-*-*-*-*-12-*-*-*-*-*-*-*
+URxvt*background: black
+URxvt*foreground: green
