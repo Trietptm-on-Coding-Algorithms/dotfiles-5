@@ -1,4 +1,4 @@
 *.swp
 .vim/*
 .vim/.*
-.vim/.netwrhlist
+.vim/.netwrhist
