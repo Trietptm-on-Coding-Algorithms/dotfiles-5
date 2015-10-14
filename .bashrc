@@ -29,6 +29,14 @@ function uncatch_segfault() {
   export LD_PRELOAD=$LD_PRELOAD_BAK
 }
 
+function quote_plus() {
+python -c "print __import__('urllib').quote_plus(__import__('sys').stdin.read())"
+}
+
+function unquote_plus() {
+python -c "print __import__('urllib').unquote_plus(__import__('sys').stdin.read())"
+}
+
 function logged_cd() {
   \cd "$@"
   pwd
@@ -52,10 +60,11 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+color_prompt=
 if [ "$color_prompt" = yes ]; then
   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;04;34m\]\w\[\033[24m $(psexit)\n\$\[\033[00m\] '
 else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
+  PS1='\033[04;37m\[`LC_ALL=C date` \w\]\033[00m\n> '
 fi
 unset color_prompt force_color_prompt
 
@@ -70,10 +79,10 @@ esac
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+#    alias ls='ls --color=auto'
+#    alias grep='grep --color=auto'
+#    alias fgrep='fgrep --color=auto'
+#    alias egrep='egrep --color=auto'
 fi
 
 alias ll='ls -l'
@@ -94,6 +103,7 @@ alias -- "objdump"="objdump -Mintel"
 alias -- "rot13"="conv -e rot13"
 alias -- "zlib"="conv -e zlib"
 alias -- "unzlib"="conv -d zlib"
+alias -- "checksec"="python -m roputils checksec"
 
 shopt -s histverify
 
@@ -108,7 +118,5 @@ export MECAB_PATH=/usr/lib/libmecab.so.2
 export PYTHONSTARTUP="/home/eshiho/.pyrc"
 
 export TERM=xterm-256color
-export PATH=$PATH:~/scripts:~/prog/bin/:
-
-PATH=$PATH:/home/eshiho/010editor;export PATH; 
+export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor
 
