@@ -31,10 +31,16 @@ function logged_cd() {
   \cd "$@" && pwd
 }
 
-export PS1='\033[04;37m\[`LC_ALL=C date` \w\]\033[00m\n> '
+function battery() {
+  if [ ! -z "`which acpi`" ]; then
+    echo -ne "`acpi -b | sed -E 's/^.+\s+([0-9]+%).+$/\1/g'`"
+  fi
+  exit 0
+}
+
+export PS1='\033[04;37m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
 unset color_prompt force_color_prompt
 
-unalias ls
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
