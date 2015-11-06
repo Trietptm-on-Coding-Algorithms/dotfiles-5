@@ -38,6 +38,10 @@ function battery() {
   exit 0
 }
 
+if [ -n "$XTERM_VERSION" ]; then
+  transset-df -a 0.75 >/dev/null 2>&1
+fi
+
 export PS1='\033[04;37m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
 unset color_prompt force_color_prompt
 
@@ -73,6 +77,5 @@ fi
 export MECAB_PATH=/usr/lib/libmecab.so.2
 export PYTHONSTARTUP="$HOME/.pyrc"
 
-export TERM=xterm-256color
 export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor
 

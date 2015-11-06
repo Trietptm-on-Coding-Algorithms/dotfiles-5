@@ -21,6 +21,7 @@ entry ".pyrc"
 entry ".vimrc"
 entry ".bashrc"
 entry ".Xresources"
+entry ".xsession"
 entry ".gdbinit"
 
 entry ".vim/"
