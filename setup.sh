@@ -19,9 +19,10 @@ function entry () {
 
 entry ".pyrc"
 entry ".vimrc"
+entry ".twmrc"
 entry ".bashrc"
 entry ".Xresources"
-entry ".xsession"
+entry ".xinitrc"
 entry ".gdbinit"
 
 entry ".vim/"

@@ -4,6 +4,7 @@ set number
 set nocompatible
 set expandtab
 set tabstop=2
+set softtabstop=2
 set shiftwidth=2
 set autoindent
 set smartindent
@@ -18,11 +19,9 @@ set colorcolumn=80
 set nohlsearch
 set mouse=a
 
-if !has('gui_running')
-  set visualbell
-  set t_vb=
-  set t_Co=256
-endif
+set visualbell
+set t_vb=
+set t_Co=256
 
 colorscheme hybrid
 
@@ -41,7 +40,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'lervag/vim-latex'
-"NeoBundle 'Rip-Rip/clang_complete'
+NeoBundle 'Rip-Rip/clang_complete'
 
 call neobundle#end()
 filetype plugin indent on
@@ -62,10 +61,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 
-let g:clang_use_library = 1
-
-let g:clang_library_path = '/usr/share/clang/'
-let g:clang_debug = 1
+let g:clang_library_path = '/usr/local/lib'
 let g:clang_user_options = '-std=c++11 -stdlib=libc++'
 
 let g:indentLine_char='|'
@@ -133,6 +129,9 @@ augroup mysetting
   autocmd BufWrite * call DeleteBlankLineIndent()
   autocmd BufWritePost * call s:syntastic()
   autocmd FileType python setlocal completeopt-=preview
+  autocmd FileType python setlocal tabstop=2
+  autocmd FileType python setlocal softtabstop=2
+  autocmd FileType python setlocal shiftwidth=2
   autocmd FileType c,cpp setlocal foldmethod=syntax
   autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
   autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110

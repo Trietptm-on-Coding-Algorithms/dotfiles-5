@@ -6,12 +6,18 @@
 XTerm*utf8 : 1
 XTerm*locale : true
 XTerm*selecToClipboard : true
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 XTerm*faceSize : 10
 XTerm*cjkWidth : true
 XTerm*background : black
 XTerm*foreground : green
 Xterm*saveLines : 10000
 
-URxvt*font : -*-m+ 1m medium-*-*-*-*-12-*-*-*-*-*-*-*
-URxvt*background: black
-URxvt*foreground: green
+UXTerm*utf8 : 1
+UXTerm*locale : true
+UXTerm*selecToClipboard : true
+UXTerm*faceSize : 10
+UXTerm*cjkWidth : true
+UXTerm*background : black
+UXTerm*foreground : green
+UXterm*saveLines : 10000

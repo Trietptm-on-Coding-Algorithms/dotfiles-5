@@ -29,6 +29,7 @@ python -c "print __import__('urllib').unquote_plus(__import__('sys').stdin.read(
 
 function logged_cd() {
   \cd "$@" && pwd
+  [[ $((`ls | wc -l` < 100)) == 1 ]] && ls
 }
 
 function battery() {
@@ -38,9 +39,9 @@ function battery() {
   exit 0
 }
 
-if [ -n "$XTERM_VERSION" ]; then
-  transset-df -a 0.75 >/dev/null 2>&1
-fi
+#if [ -n "$XTERM_VERSION" ]; then
+  #transset-df -a 0.75 >/dev/null 2>&1
+#fi
 
 export PS1='\033[04;37m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
 unset color_prompt force_color_prompt
@@ -52,8 +53,8 @@ alias tmux='tmux -S $HOME/opt/tmux/socket'
 alias d='dirs'
 alias -- +=pushd
 alias -- -=popd
-alias ":q"="echo \"ここはVimじゃねーよクソ\""
-alias ":wq"="echo \"ここはVimじゃねーよクソ\""
+alias ":q"="echo \"Vimではない。\""
+alias ":wq"="echo \"Vimではない。\""
 alias -- ".."="cd .."
 alias -- "gvim"="gvim 2>/dev/null"
 alias -- "strings"="strings -tx"
@@ -78,4 +79,6 @@ export MECAB_PATH=/usr/lib/libmecab.so.2
 export PYTHONSTARTUP="$HOME/.pyrc"
 
 export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor
+export TERM=xterm
 
+PATH=$PATH:/home/shiho/010editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 F7F3D532-268C-DE3E-F77D-36874C192A89
