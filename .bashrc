@@ -43,7 +43,7 @@ function battery() {
   #transset-df -a 0.75 >/dev/null 2>&1
 #fi
 
-export PS1='\033[04;37m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
+export PS1='\033[01;30m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
 unset color_prompt force_color_prompt
 
 alias ll='ls -l'
@@ -53,8 +53,8 @@ alias tmux='tmux -S $HOME/opt/tmux/socket'
 alias d='dirs'
 alias -- +=pushd
 alias -- -=popd
-alias ":q"="echo \"Vimではない。\""
-alias ":wq"="echo \"Vimではない。\""
+alias ":q"="echo \"Vim¿¿¿¿¿\""
+alias ":wq"="echo \"Vim¿¿¿¿¿\""
 alias -- ".."="cd .."
 alias -- "gvim"="gvim 2>/dev/null"
 alias -- "strings"="strings -tx"

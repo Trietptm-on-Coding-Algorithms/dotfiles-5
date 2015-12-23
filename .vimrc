@@ -18,6 +18,8 @@ set textwidth=0
 set colorcolumn=80
 set nohlsearch
 set mouse=a
+set noswapfile
+set nobackup
 
 set visualbell
 set t_vb=
