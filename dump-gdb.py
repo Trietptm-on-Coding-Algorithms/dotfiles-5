@@ -1,4 +1,5 @@
 import re
+
 class COLOR:
   BLACK   = "\x1b[30m"
   RED     = "\x1b[31m"
@@ -54,7 +55,9 @@ class extended_examine(gdb.Command):
 
     print(COLOR.BLUE + "="*barlen + COLOR.DEFAULT)
     print(COLOR.BOLD + COLOR.RED + "Stack: " + COLOR.DEFAULT)
-    print(COLOR.MAGENTA + exec_cmd("x/32wx $sp-16", True) + COLOR.DEFAULT)
+    d = exec_cmd("x/32wx $sp-16", True)
+    if d != None:
+      print(COLOR.MAGENTA + d + COLOR.DEFAULT)
 
     print(COLOR.BLUE + "="*barlen + COLOR.DEFAULT)
     print(COLOR.BOLD + COLOR.RED + "Registers: " + COLOR.DEFAULT)
@@ -66,8 +69,8 @@ class extended_examine(gdb.Command):
       for x in registers:
         r = re.match("(\w+)\s+(0x[0-9a-f]+)\s+\d+", x)
         if r != None:
-          s += ('%s: ' % r.group(1)).ljust(5, " ")
-          s += ('%08x\t' % eval(r.group(2)))
+          s += ('%s: ' % r.group(1)).ljust(6, " ")
+          s += ('0x%08x\t' % eval(r.group(2))).rjust(19, " ")
           if (i + 1) % 4 == 0:
             print(COLOR.YELLOW + s + COLOR.DEFAULT)
             s = ""

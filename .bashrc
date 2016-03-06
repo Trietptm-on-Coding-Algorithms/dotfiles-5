@@ -5,6 +5,10 @@ HISTFILESIZE=2000
 
 shopt -s checkwinsize
 
+function dcal() {
+  cal -H `date +%Y-%m-`$1
+}
+
 function md_cd() {
   mkdir $1 && echo $1 && cd $1
 }
@@ -38,12 +42,7 @@ function battery() {
   fi
   exit 0
 }
-
-#if [ -n "$XTERM_VERSION" ]; then
-  #transset-df -a 0.75 >/dev/null 2>&1
-#fi
-
-export PS1='\033[01;30m\[`LC_ALL=C date` \w\] $(battery)\033[00m\n> '
+export PS1='\033[01m\[`LC_ALL=C date` \w\] $(battery)\033[0m\n> '
 unset color_prompt force_color_prompt
 
 alias ll='ls -l'
@@ -53,8 +52,8 @@ alias tmux='tmux -S $HOME/opt/tmux/socket'
 alias d='dirs'
 alias -- +=pushd
 alias -- -=popd
-alias ":q"="echo \"Vim¿¿¿¿¿\""
-alias ":wq"="echo \"Vim¿¿¿¿¿\""
+alias ":q"="echo \"Vimではない。\""
+alias ":wq"="echo \"Vimではない。\""
 alias -- ".."="cd .."
 alias -- "gvim"="gvim 2>/dev/null"
 alias -- "strings"="strings -tx"
@@ -78,7 +77,10 @@ fi
 export MECAB_PATH=/usr/lib/libmecab.so.2
 export PYTHONSTARTUP="$HOME/.pyrc"
 
-export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor
-export TERM=xterm
+export JAVA_HOME="/usr/local/lib/jdk1.8.0_73/"
+export GOPATH="$HOME/.go/"
+
+export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor:${JAVA_HOME}/bin:${GOPATH}/bin
+#export TERM=xterm
 
 PATH=$PATH:/home/shiho/010editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 F7F3D532-268C-DE3E-F77D-36874C192A89

@@ -1,11 +1,6 @@
 NoGrabServer
 RestartPreviousState
 DecorateTransients
-TitleFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-ResizeFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-MenuFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-IconFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
-IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
 RandomPlacement "on"
 NoTitle
 
@@ -18,7 +13,6 @@ Color
     TitleForeground "white"
     MenuBackground "blue"
     MenuForeground "white"
-    MenuBorderColor "slategrey"
     MenuTitleBackground "white"
     MenuTitleForeground "blue"
     IconBackground "blue"
@@ -58,6 +52,11 @@ RightTitleButton ":delete" = f.delete
 "Down"  = m4    : all : f.iconify
 "l"     = m4    : all : f.exec "lxlock &"
 
+"Up"    = m4 | s: all : f.quadzoomlt
+"Down"  = m4 | s: all : f.quadzoomlb
+"Up"    = m4 | c: all : f.quadzoomrt
+"Down"  = m4 | c: all : f.quadzoomrb
+
 Button1=m:all:f.function"move-or-raise"
 Button3=m:all:f.resize
 Button2=m:all:f.delete
@@ -65,12 +64,13 @@ Button2=m:all:f.delete
 menu "main"
 {
 		"Main Menu"		f.title
-		"Debian"		f.menu "/Debian"
+		"Applications"		f.menu "/Applications"
 		"---------"			f.nop
 		"010Editor"			f.exec "010editor &"
 		"FireFox"			f.exec "firefox &"
 		"Leafpad"			f.exec "leafpad &"
 		"XTerm"			f.exec "xterm &"
+		"Volume Control"			f.exec "pavucontrol &"
 		"---------"			f.nop
 		"Lock"			f.exec "lxlock &"
 		"Exit"			f.menu "Quit-Verify"
@@ -100,48 +100,33 @@ menu "windowops"
 		"Destroy"		f.destroy
 }
 
-# Automatically generated file. Do not edit (see /usr/share/doc/menu/html/index.html)
-
-menu "/Debian/Applications/Editors"
+menu "/Applications/Editors"
 {
   "Gedit"    f.exec  "/usr/bin/gedit &"
   "LeafPad"    f.exec  "/usr/bin/leafpad &"
 }
-menu "/Debian/Applications/File Management"
-{
-  "PCManFM"    f.exec  "/usr/bin/pcmanfm &"
-}
-menu "/Debian/Applications/Graphics"
+menu "/Applications/Graphics"
 {
   "ImageMagick"    f.exec  "/usr/bin/display.im6 logo: &"
   "LibreOffice Draw"    f.exec  "/usr/bin/libreoffice --draw &"
   "The GIMP"    f.exec  "/usr/bin/gimp &"
   "X Window Snapshot"    f.exec  "xwd | xwud &"
 }
-menu "/Debian/Applications/Network/Monitoring"
+menu "/Applications/Network/Monitoring"
 {
   "Wireshark"    f.exec  "/usr/bin/wireshark &"
 }
-menu "/Debian/Applications/Network/Web Browsing"
+menu "/Applications/Network/Web Browsing"
 {
   "w3m"    f.exec  "x-terminal-emulator  -T \"w3m\" -e sh -c \"/usr/bin/w3m /usr/share/doc/w3m/MANUAL.html\" &"
 }
-menu "/Debian/Applications/Office"
+menu "/Applications/Office"
 {
   "LibreOffice Calc"    f.exec  "/usr/bin/libreoffice --calc &"
   "LibreOffice Impress"    f.exec  "/usr/bin/libreoffice --impress &"
   "LibreOffice Writer"    f.exec  "/usr/bin/libreoffice --writer &"
 }
-menu "/Debian/Applications/Programming"
-{
-  "GDB"    f.exec  "x-terminal-emulator  -T \"GDB\" -e sh -c \"/usr/bin/gdb\" &"
-  "Python (v2.7)"    f.exec  "x-terminal-emulator  -T \"Python (v2.7)\" -e sh -c \"/usr/bin/python2.7\" &"
-  "Python (v3.4)"    f.exec  "x-terminal-emulator  -T \"Python (v3.4)\" -e sh -c \"/usr/bin/python3.4\" &"
-  "Ruby (irb1.9.1)"    f.exec  "x-terminal-emulator  -T \"Ruby (irb1.9.1)\" -e sh -c \"/usr/bin/irb1.9.1\" &"
-  "Tclsh8.6"    f.exec  "x-terminal-emulator  -T \"Tclsh8.6\" -e sh -c \"/usr/bin/tclsh8.6\" &"
-  "TkWish8.6"    f.exec  "x-terminal-emulator -e /usr/bin/wish8.6 &"
-}
-menu "/Debian/Applications/System/Administration"
+menu "/Applications/System/Administration"
 {
   "DSL/PPPoE configuration tool"    f.exec  "x-terminal-emulator  -T \"DSL/PPPoE configuration tool\" -e sh -c \"/usr/sbin/pppoeconf\" &"
   "Editres"    f.exec  "editres &"
@@ -153,11 +138,11 @@ menu "/Debian/Applications/System/Administration"
   "Xkill"    f.exec  "xkill &"
   "Xrefresh"    f.exec  "xrefresh &"
 }
-menu "/Debian/Applications/System/Language Environment"
+menu "/Applications/System/Language Environment"
 {
   "Input Method Configuration"    f.exec  "x-terminal-emulator  -T \"Input Method Configuration\" -e sh -c \"/usr/bin/im-config\" &"
 }
-menu "/Debian/Applications/System/Monitoring"
+menu "/Applications/System/Monitoring"
 {
   "GNOME system monitor"    f.exec  "/usr/bin/gnome-system-monitor &"
   "Pstree"    f.exec  "x-terminal-emulator  -T \"Pstree\" -e sh -c \"/usr/bin/pstree.x11\" &"
@@ -166,18 +151,18 @@ menu "/Debian/Applications/System/Monitoring"
   "Xev"    f.exec  "x-terminal-emulator -e xev &"
   "Xload"    f.exec  "xload &"
 }
-menu "/Debian/Applications/System/Package Management"
+menu "/Applications/System/Package Management"
 {
   "Synaptic Package Manager"    f.exec  "x-terminal-emulator -e synaptic-pkexec &"
 }
-menu "/Debian/Applications/System"
+menu "/Applications/System"
 {
-  "Administration" f.menu "/Debian/Applications/System/Administration"
-  "Language Environment" f.menu "/Debian/Applications/System/Language Environment"
-  "Monitoring" f.menu "/Debian/Applications/System/Monitoring"
-  "Package Management" f.menu "/Debian/Applications/System/Package Management"
+  "Administration" f.menu "/Applications/System/Administration"
+  "Language Environment" f.menu "/Applications/System/Language Environment"
+  "Monitoring" f.menu "/Applications/System/Monitoring"
+  "Package Management" f.menu "/Applications/System/Package Management"
 }
-menu "/Debian/Applications/Viewers"
+menu "/Applications/Viewers"
 {
   "Evince"    f.exec  "/usr/bin/evince &"
   "Eye of GNOME"    f.exec  "/usr/bin/eog &"
@@ -185,17 +170,12 @@ menu "/Debian/Applications/Viewers"
   "Xditview"    f.exec  "xditview &"
   "XDvi"    f.exec  "/usr/bin/xdvi &"
 }
-menu "/Debian/Applications"
+menu "/Applications"
 {
-  "Editors" f.menu "/Debian/Applications/Editors"
-  "File Management" f.menu "/Debian/Applications/File Management"
-  "Graphics" f.menu "/Debian/Applications/Graphics"
-  "Office" f.menu "/Debian/Applications/Office"
-  "Programming" f.menu "/Debian/Applications/Programming"
-  "System" f.menu "/Debian/Applications/System"
-  "Viewers" f.menu "/Debian/Applications/Viewers"
-}
-menu "/Debian"
-{
-  "Applications" f.menu "/Debian/Applications"
+  "Editors" f.menu "/Applications/Editors"
+  "PCManFM"    f.exec  "/usr/bin/pcmanfm &"
+  "Graphics" f.menu "/Applications/Graphics"
+  "Office" f.menu "/Applications/Office"
+  "System" f.menu "/Applications/System"
+  "Viewers" f.menu "/Applications/Viewers"
 }

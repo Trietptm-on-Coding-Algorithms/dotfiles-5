@@ -25,6 +25,11 @@ define printinfo
   xr
 end
 
+define setup
+  target sim
+  load
+end
+
 define n
   nexti
   printinfo
@@ -52,9 +57,11 @@ define b
   end
 end
 
-set disassembly-flavor intel
 set follow-fork-mode child
 set print address
 set prompt gdb> 
+set pagination off
 
 source ~/dotfiles/dump-gdb.py
+
+set disassembly-flavor intel
