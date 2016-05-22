@@ -43,6 +43,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'lervag/vim-latex'
 NeoBundle 'Rip-Rip/clang_complete'
+NeoBundle 'digitaltoad/vim-jade'
 
 call neobundle#end()
 filetype plugin indent on
@@ -60,7 +61,9 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['python']
 let g:syntastic_cpp_compiler_options = '-std=c++11'
+"let g:syntastic_cpp_checkers = ['gcc', 'clang_check']
 
 
 let g:clang_library_path = '/usr/local/lib'
@@ -88,6 +91,7 @@ nnoremap <silent> <Leader>a :SearchWordAll expand("<cword>")<CR>
 command! -nargs=1 SearchWord bufdo vimgrepa <args> % | cw
 command! -nargs=1 SearchWordAll vimgrep <args> * | cw
 nmap <F8> :TagbarToggle<CR>
+nmap <F10> :Opsplore<CR>
 
 let g:lightline = { 
       \ 'colorscheme': 'landscape',
@@ -127,6 +131,7 @@ augroup mysetting
   autocmd BufNewFile,BufRead *.inc set filetype=php
   autocmd BufNewFile,BufRead *.jst set filetype=javascript
   autocmd BufNewFile,BufRead *.sage set filetype=python
+  autocmd BufNewFile,BufRead *.go set filetype=go
   autocmd BufNewFile,BufRead *.md set filetype=markdown
   autocmd BufWrite * call DeleteBlankLineIndent()
   autocmd BufWritePost * call s:syntastic()

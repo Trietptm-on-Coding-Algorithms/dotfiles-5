@@ -8,7 +8,8 @@ export XMODIFIERS="@im=fcitx"
 fcitx &
 /usr/lib/mozc/mozc-server &
 xrdb -load ~/.Xresources
-xv -root -max  -quit ~/Pictures/back.jpg
+xv -root -max -quit ~/Pictures/back.jpg
 #exec twm
 #LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so exec ~/prog/twm/twm 2>>~/twm_err
-LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so exec ~/prog/twm/bin/twm 2>>~/twm_err
+#LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so exec ~/prog/twm/bin/twm 2>>~/twm_err
+exec ~/prog/twm/bin/twm

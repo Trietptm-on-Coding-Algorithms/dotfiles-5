@@ -4,11 +4,12 @@
 *beNiceToColormap:	False
 
 XTerm*utf8 : 1
-XTerm*locale : true
+XTerm*locale : UTF-8
 XTerm*selecToClipboard : true
 XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 XTerm*faceSize : 10
 XTerm*cjkWidth : true
+XTerm*wideBoldFont : fixed
 XTerm*background : black
 XTerm*foreground : green
 Xterm*saveLines : 10000

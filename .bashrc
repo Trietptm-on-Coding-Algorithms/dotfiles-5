@@ -32,17 +32,17 @@ python -c "print __import__('urllib').unquote_plus(__import__('sys').stdin.read(
 }
 
 function logged_cd() {
-  \cd "$@" && pwd
-  [[ $((`ls | wc -l` < 100)) == 1 ]] && ls
+  \cd "$@" && (pwd [[ $((`ls | wc -l` < 100)) == 1 ]] && ls)
 }
 
 function battery() {
   if [ ! -z "`which acpi`" ]; then
-    echo -ne "`acpi -b | sed -E 's/^.+\s+([0-9]+%).+$/\1/g'`"
+    echo -ne "`acpi -b | grep -o '[0-9]\+%'`"
   fi
   exit 0
 }
-export PS1='\033[01m\[`LC_ALL=C date` \w\] $(battery)\033[0m\n> '
+
+export PS1='\033[01m\[`LC_ALL=C date` \w $(battery)\]\033[0m\n> '
 unset color_prompt force_color_prompt
 
 alias ll='ls -l'
@@ -64,6 +64,7 @@ alias -- "rot13"="conv -e rot13"
 alias -- "zlib"="conv -e zlib"
 alias -- "unzlib"="conv -d zlib"
 alias -- "checksec"="python -m roputils checksec"
+alias -- "primefac"="python -m primefac -v"
 
 shopt -s histverify
 
@@ -81,6 +82,3 @@ export JAVA_HOME="/usr/local/lib/jdk1.8.0_73/"
 export GOPATH="$HOME/.go/"
 
 export PATH=$PATH:~/scripts:~/prog/bin/:/home/eshiho/010editor:${JAVA_HOME}/bin:${GOPATH}/bin
-#export TERM=xterm
-
-PATH=$PATH:/home/shiho/010editor;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 F7F3D532-268C-DE3E-F77D-36874C192A89

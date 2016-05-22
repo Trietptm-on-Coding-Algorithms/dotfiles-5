@@ -52,10 +52,11 @@ RightTitleButton ":delete" = f.delete
 "Down"  = m4    : all : f.iconify
 "l"     = m4    : all : f.exec "lxlock &"
 
-"Up"    = m4 | s: all : f.quadzoomlt
-"Down"  = m4 | s: all : f.quadzoomlb
-"Up"    = m4 | c: all : f.quadzoomrt
-"Down"  = m4 | c: all : f.quadzoomrb
+"u"    = m4 : all : f.quadzoomlt
+"j"    = m4 : all : f.quadzoomlb
+"i"    = m4 : all : f.quadzoomrt
+"k"    = m4 : all : f.quadzoomrb
+"a"    = m4: all : f.debug
 
 Button1=m:all:f.function"move-or-raise"
 Button3=m:all:f.resize
@@ -65,12 +66,14 @@ menu "main"
 {
 		"Main Menu"		f.title
 		"Applications"		f.menu "/Applications"
-		"---------"			f.nop
-		"010Editor"			f.exec "010editor &"
-		"FireFox"			f.exec "firefox &"
-		"Leafpad"			f.exec "leafpad &"
-		"XTerm"			f.exec "xterm &"
-		"Volume Control"			f.exec "pavucontrol &"
+		"---------"	  		f.nop
+		"010Editor"	  		f.exec "010editor &"
+    "PCManFM"         f.exec  "/usr/bin/pcmanfm &"
+		"FireFox"	    		f.exec "firefox &"
+		"Leafpad"	    		f.exec "leafpad &"
+		"XTerm"			      f.exec "xterm &"
+		"Volume Control"	f.exec "pavucontrol &"
+		"RhythmBox"	    		f.exec "rhythmbox &"
 		"---------"			f.nop
 		"Lock"			f.exec "lxlock &"
 		"Exit"			f.menu "Quit-Verify"
@@ -173,7 +176,6 @@ menu "/Applications/Viewers"
 menu "/Applications"
 {
   "Editors" f.menu "/Applications/Editors"
-  "PCManFM"    f.exec  "/usr/bin/pcmanfm &"
   "Graphics" f.menu "/Applications/Graphics"
   "Office" f.menu "/Applications/Office"
   "System" f.menu "/Applications/System"
